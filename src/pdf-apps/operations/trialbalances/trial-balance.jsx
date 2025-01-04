@@ -341,7 +341,7 @@ const TrialBalance = () => {
 
   return (
     <div
-      className="flex items-center justify-center flex-col h-full w-full sm:min-w-[800px]
+      className="flex items-center justify-center flex-col h-full w-full sm:w-[600px]
  lg:w-min-[900px] xl:w-[1000px] mb-10 overflow-x-hidden"
     >
       <TrialBalanceForm onSubmit={handleFormSubmit} loading={isLoading} />
