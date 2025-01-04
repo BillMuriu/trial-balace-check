@@ -44,9 +44,10 @@ export function LedgerDataTable({ columns, data, onSelectionChange }) {
   });
 
   return (
-    <div>
-      <ScrollArea className="min-w-96 whitespace-nowrap rounded-md border">
-        <Table>
+    <div className="overflow-hidden rounded-md border">
+      {/* Scrollable table container */}
+      <ScrollArea className="w-full">
+        <Table className="min-w-full table-auto whitespace-nowrap text-sm">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -98,7 +99,7 @@ export function LedgerDataTable({ columns, data, onSelectionChange }) {
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-24 text-center text-gray-500"
                 >
                   No results.
                 </TableCell>

@@ -42,7 +42,7 @@ const TrialBalanceForm = ({ onSubmit, loading }) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full max-w-md flex flex-col gap-4 lg:flex-row lg:gap-6 lg:justify-between lg:items-end sm:px-0"
+        className="w-full sm:w-[400px] max-w-md flex flex-col gap-4 lg:flex-row lg:gap-6 lg:justify-between lg:items-end sm:px-0"
       >
         {/* Start Date */}
         <FormField

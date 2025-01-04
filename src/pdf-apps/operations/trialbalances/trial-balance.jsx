@@ -372,10 +372,10 @@ const TrialBalance = () => {
               <p className="text-sm text-gray-500 text-right">Loading...</p>
             )}
           </div>
-          <div className="p-3 mb-4">
+          <div className="p-3 mb-10">
             {["Opening Balances", "Main Accounts", "Closing Balances"].map(
               (section, index) => (
-                <section key={index} className="mb-4">
+                <section key={index} className="mb-10">
                   <h3 className="text-sm font-medium mb-2">{section}</h3>
                   <TrialBalanceDataTable
                     data={
@@ -391,8 +391,8 @@ const TrialBalance = () => {
               )
             )}
           </div>
-          <div className="p-3 bg-gray-50 mb-4">
-            <h3 className="text-sm font-medium mb-2">Totals</h3>
+          <div className="p-3 bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 shadow-md mb-10">
+            <h3 className="text-sm font-medium mb-2 text-blue-700">Totals</h3>
             <TrialBalanceDataTable
               data={[
                 {

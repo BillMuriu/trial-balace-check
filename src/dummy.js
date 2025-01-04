@@ -33,3 +33,70 @@ export const financialData = {
   total_debits: 216500.0,
   total_credits: 61500.0,
 };
+
+// Dummy data for the ledger
+export const ledger = {
+  combined_ledger: {
+    rmi_ledger: {
+      credits: [],
+      debits: [
+        {
+          date: "2024-12-16T12:00:00Z",
+          amount: 10000.0,
+          type: "debit",
+          cashbook: "CashBook-6-2024-2025",
+        },
+      ],
+      total_credits: 0,
+      total_debits: 10000.0,
+    },
+    bankcharge_ledger: {
+      debits: [
+        {
+          date: "2024-12-20T00:00:00Z",
+          amount: 250.5,
+          cashbook: "CashBook-6-2024-2025",
+        },
+      ],
+      total_debits: 250.5,
+    },
+    school_fund_ledger: {
+      credits: [
+        {
+          date: "2024-12-16T00:00:00Z",
+          amount: 50000.0,
+          type: "credit",
+          cashbook: "CashBook-6-2024-2025",
+        },
+        {
+          date: "2024-12-15T00:00:00Z",
+          amount: 5000.0,
+          type: "credit",
+          cashbook: "CashBook-6-2024-2025",
+        },
+      ],
+      debits: [],
+      total_credits: 55000.0,
+      total_debits: 0,
+    },
+    tuition_ledger: {
+      credits: [],
+      debits: [
+        {
+          date: "2024-12-16T10:30:00Z",
+          amount: 150000.0,
+          type: "debit",
+          cashbook: "CashBook-6-2024-2025",
+        },
+      ],
+      total_credits: 0,
+      total_debits: 150000.0,
+    },
+    other_voteheads_ledger: {
+      credits: [],
+      debits: [],
+      total_credits: 0,
+      total_debits: 0,
+    },
+  },
+};
