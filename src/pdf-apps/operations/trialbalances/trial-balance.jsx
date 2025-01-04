@@ -335,7 +335,7 @@ const TrialBalance = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="w-full px-3 max-w-sm md:max-w-md lg:max-w-lg mx-auto">
+    <div className="w-full px-0 max-w-sm md:max-w-md lg:max-w-lg mx-auto">
       <TrialBalanceForm onSubmit={handleFormSubmit} loading={isLoading} />
       {data && (
         <div className="w-full bg-white shadow-md rounded-md mt-6">
