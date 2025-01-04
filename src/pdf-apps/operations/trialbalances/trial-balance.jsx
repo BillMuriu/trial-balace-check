@@ -338,8 +338,8 @@ const TrialBalance = () => {
     <div className="w-full px-0 max-w-sm md:max-w-md lg:max-w-lg mx-auto">
       <TrialBalanceForm onSubmit={handleFormSubmit} loading={isLoading} />
       {data && (
-        <div className="w-full bg-white shadow-md rounded-md mt-6">
-          <div className="p-3 border-b border-gray-200">
+        <div className="w-full bg-white shadow-md rounded-md mt-6 relative">
+          <div className="p-3 border-b border-gray-200 relative">
             <h2 className="text-lg font-semibold text-center">Trial Balance</h2>
             {transformedData.openingBalances.length > 0 &&
             transformedData.closingBalances.length > 0 &&
@@ -353,7 +353,7 @@ const TrialBalance = () => {
                   />
                 }
                 fileName={`Trial_Balance_${startDate}_${endDate}.pdf`}
-                className="absolute top-2 right-4 text-sm font-medium text-blue-500 hover:underline"
+                className="absolute top-3 right-3 flex items-center gap-1 text-sm font-medium text-blue-500 hover:underline"
               >
                 {({ loading }) =>
                   loading ? (
