@@ -234,13 +234,11 @@ import TrialBalancePDF from "./components/trial-balance-pdf";
 import clsx from "clsx";
 import { financialData } from "@/dummy";
 
-// Fetch function to simulate getting trial balance data
 const fetchTrialBalance = async (startDate, endDate) => {
-  // Simulate an API call with a promise
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(financialData);
-    }, 500); // Simulate a delay
+    }, 500);
   });
 };
 
@@ -270,7 +268,6 @@ const TrialBalance = () => {
           setIsLoading(false);
         }
       };
-
       fetchData();
     }
   }, [startDate, endDate]);
@@ -282,13 +279,11 @@ const TrialBalance = () => {
     let totalDebits = 0;
     let totalCredits = 0;
 
-    // Get all unique accounts from both debits and credits
     const allAccounts = new Set([
       ...Object.keys(data.debits),
       ...Object.keys(data.credits),
     ]);
 
-    // Iterate through each account
     allAccounts.forEach((account) => {
       const debits =
         typeof data.debits[account] === "object"
@@ -340,15 +335,13 @@ const TrialBalance = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="flex flex-col items-center justify-center w-full px-4 sm:px-6 lg:px-8 mb-10">
+    <div className="w-full px-3 max-w-sm md:max-w-md lg:max-w-lg mx-auto">
       <TrialBalanceForm onSubmit={handleFormSubmit} loading={isLoading} />
       {data && (
-        <div className="w-full max-w-full sm:max-w-lg lg:max-w-3xl xl:max-w-4xl mt-8 bg-white shadow-lg rounded-lg overflow-hidden">
-          <div className="relative mb-6 px-4 py-2">
-            <h2 className="text-2xl font-bold text-center">Trial Balance</h2>
-            <h2 className="text-2xl font-bold text-center">Trial Balance2</h2>
-            {transformedData &&
-            transformedData.openingBalances.length > 0 &&
+        <div className="w-full bg-white shadow-md rounded-md mt-6">
+          <div className="p-3 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-center">Trial Balance</h2>
+            {transformedData.openingBalances.length > 0 &&
             transformedData.closingBalances.length > 0 &&
             transformedData.others.length > 0 ? (
               <PDFDownloadLink
@@ -359,8 +352,8 @@ const TrialBalance = () => {
                     transformedData={transformedData}
                   />
                 }
-                fileName={`Operations_Trial_Balance_${startDate}_${endDate}.pdf`}
-                className="absolute top-2 right-4 flex items-center gap-1 text-sm font-medium text-blue-500 hover:underline"
+                fileName={`Trial_Balance_${startDate}_${endDate}.pdf`}
+                className="absolute top-2 right-4 text-sm font-medium text-blue-500 hover:underline"
               >
                 {({ loading }) =>
                   loading ? (
@@ -374,44 +367,30 @@ const TrialBalance = () => {
                 }
               </PDFDownloadLink>
             ) : (
-              <p className="absolute top-2 right-4 text-sm text-gray-500">
-                Loading...
-              </p>
+              <p className="text-sm text-gray-500 text-right">Loading...</p>
             )}
           </div>
-          <div className="space-y-8 px-4">
-            <section>
-              <h3 className="text-md font-semibold mt-4 mb-1 p-2 bg-gray-100 rounded-md">
-                Opening Balances
-              </h3>
-              <TrialBalanceDataTable
-                data={transformedData.openingBalances}
-                columns={trialBalanceColumns}
-              />
-            </section>
-            <section>
-              <h3 className="text-md font-semibold mt-4 mb-1 p-2 bg-gray-100 rounded-md">
-                Main Accounts
-              </h3>
-              <TrialBalanceDataTable
-                data={transformedData.others}
-                columns={trialBalanceColumns}
-              />
-            </section>
-            <section>
-              <h3 className="text-md font-semibold mt-4 mb-1 p-2 bg-gray-100 rounded-md">
-                Closing Balances
-              </h3>
-              <TrialBalanceDataTable
-                data={transformedData.closingBalances}
-                columns={trialBalanceColumns}
-              />
-            </section>
+          <div className="p-3">
+            {["Opening Balances", "Main Accounts", "Closing Balances"].map(
+              (section, index) => (
+                <section key={index}>
+                  <h3 className="text-sm font-medium mb-2">{section}</h3>
+                  <TrialBalanceDataTable
+                    data={
+                      section === "Opening Balances"
+                        ? transformedData.openingBalances
+                        : section === "Main Accounts"
+                        ? transformedData.others
+                        : transformedData.closingBalances
+                    }
+                    columns={trialBalanceColumns}
+                  />
+                </section>
+              )
+            )}
           </div>
-          <section className="px-4 py-4 bg-gray-50 rounded-b-lg">
-            <h3 className="text-md font-semibold mt-4 mb-1 p-2 bg-gray-200 rounded-md">
-              Totals
-            </h3>
+          <div className="p-3 bg-gray-50">
+            <h3 className="text-sm font-medium mb-2">Totals</h3>
             <TrialBalanceDataTable
               data={[
                 {
@@ -422,7 +401,7 @@ const TrialBalance = () => {
               ]}
               columns={trialBalanceColumns}
             />
-          </section>
+          </div>
         </div>
       )}
     </div>
