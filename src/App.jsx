@@ -12,7 +12,7 @@ const App = () => {
         {" "}
         {/* Prevent horizontal overflow globally */}
         {/* Main Content */}
-        <div className="flex-grow bg-gray-50 p-4">
+        <div className="flex-grow bg-gray-50 p-0">
           <Routes>
             <Route path="/operations-cashbook-pdfs" element={<CashBook />} />
             <Route path="/home" element={<Home />} />
