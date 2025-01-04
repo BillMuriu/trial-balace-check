@@ -346,7 +346,7 @@ const TrialBalance = () => {
     >
       <TrialBalanceForm onSubmit={handleFormSubmit} loading={isLoading} />
       {data && (
-        <div className="w-full sm:w-[800px] mt-8 bg-white shadow-lg rounded-lg p-6 relative max-w-full">
+        <div className="sm:w-[600px] mt-8 bg-white shadow-lg rounded-lg relative w-full">
           <div className="relative mb-6">
             <h2 className="text-2xl font-bold text-center">Trial Balance</h2>
             {transformedData &&
