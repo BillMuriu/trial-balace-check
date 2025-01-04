@@ -223,6 +223,8 @@
 
 // export default TrialBalance;
 
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { Download } from "lucide-react";
 import TrialBalanceForm from "./components/trial-balance-form";
@@ -370,10 +372,10 @@ const TrialBalance = () => {
               <p className="text-sm text-gray-500 text-right">Loading...</p>
             )}
           </div>
-          <div className="p-3">
+          <div className="p-3 mb-4">
             {["Opening Balances", "Main Accounts", "Closing Balances"].map(
               (section, index) => (
-                <section key={index}>
+                <section key={index} className="mb-4">
                   <h3 className="text-sm font-medium mb-2">{section}</h3>
                   <TrialBalanceDataTable
                     data={
@@ -389,7 +391,7 @@ const TrialBalance = () => {
               )
             )}
           </div>
-          <div className="p-3 bg-gray-50">
+          <div className="p-3 bg-gray-50 mb-4">
             <h3 className="text-sm font-medium mb-2">Totals</h3>
             <TrialBalanceDataTable
               data={[

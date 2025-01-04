@@ -19,7 +19,7 @@ import {
 
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
-export function TrialBalanceDataTable({ data, columns }) {
+export function TrialBalanceDataTable({ data, columns, columnWidths }) {
   const [sorting, setSorting] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
 
@@ -44,12 +44,15 @@ export function TrialBalanceDataTable({ data, columns }) {
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
+                {headerGroup.headers.map((header, index) => {
+                  const width = columnWidths?.[index] || "auto";
                   const isLeftAligned =
                     header.column.columnDef.header === "Description";
+
                   return (
                     <TableHead
                       key={header.id}
+                      style={{ width }}
                       className={isLeftAligned ? "text-left" : "text-center"}
                     >
                       {header.isPlaceholder
@@ -71,12 +74,15 @@ export function TrialBalanceDataTable({ data, columns }) {
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {row.getVisibleCells().map((cell) => {
+                  {row.getVisibleCells().map((cell, index) => {
+                    const width = columnWidths?.[index] || "auto";
                     const isLeftAligned =
                       cell.column.columnDef.header === "Description";
+
                     return (
                       <TableCell
                         key={cell.id}
+                        style={{ width }}
                         className={`${
                           isLeftAligned ? "text-left" : "text-center"
                         }`}
