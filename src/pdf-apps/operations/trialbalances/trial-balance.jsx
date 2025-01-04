@@ -334,6 +334,7 @@ const TrialBalance = () => {
         <div className="w-full max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-5xl mt-8 bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="relative mb-6 px-4 py-2">
             <h2 className="text-2xl font-bold text-center">Trial Balance</h2>
+            <h2 className="text-2xl font-bold text-center">Trial Balance</h2>
             {transformedData ? (
               <PDFDownloadLink
                 document={
