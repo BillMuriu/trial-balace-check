@@ -233,7 +233,6 @@ import { trialBalanceColumns } from "./components/trial-balance-columns";
 import { TrialBalanceDataTable } from "@/components/tables/trial-balance-table";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import TrialBalancePDF from "./components/trial-balance-pdf";
-import clsx from "clsx";
 import { financialData } from "@/dummy";
 
 const fetchTrialBalance = async (startDate, endDate) => {
@@ -337,61 +336,53 @@ const TrialBalance = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="w-full px-0 max-w-sm md:max-w-md lg:max-w-lg mx-auto">
+    <div className="flex flex-col items-center justify-center h-full w-screen p-4 sm:p-6 md:p-8">
       <TrialBalanceForm onSubmit={handleFormSubmit} loading={isLoading} />
       {data && (
-        <div className="w-full bg-white shadow-md rounded-md mt-6 relative">
-          <div className="p-3 border-b border-gray-200 relative">
-            <h2 className="text-lg font-semibold text-center">Trial Balance</h2>
-            {transformedData.openingBalances.length > 0 &&
-            transformedData.closingBalances.length > 0 &&
-            transformedData.others.length > 0 ? (
-              <PDFDownloadLink
-                document={
-                  <TrialBalancePDF
-                    startDate={startDate}
-                    endDate={endDate}
-                    transformedData={transformedData}
+        <div className="relative mt-6 w-full max-w-4xl border border-gray-200 rounded-lg shadow-lg p-6 bg-white">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-xl sm:text-2xl font-bold">Trial Balance</h1>
+            <PDFDownloadLink
+              document={
+                <TrialBalancePDF
+                  startDate={startDate}
+                  endDate={endDate}
+                  transformedData={transformedData}
+                />
+              }
+              fileName={`Trial_Balance_${startDate}_${endDate}.pdf`}
+            >
+              {({ loading }) =>
+                loading ? (
+                  <span className="text-sm text-gray-500">Preparing...</span>
+                ) : (
+                  <Download
+                    size={24}
+                    className="cursor-pointer text-blue-500 hover:text-blue-700"
                   />
-                }
-                fileName={`Trial_Balance_${startDate}_${endDate}.pdf`}
-                className="absolute top-3 right-3 flex items-center gap-1 text-sm font-medium text-blue-500 hover:underline"
-              >
-                {({ loading }) =>
-                  loading ? (
-                    "Preparing..."
-                  ) : (
-                    <>
-                      <Download className="w-4 h-4" />
-                      Download
-                    </>
-                  )
-                }
-              </PDFDownloadLink>
-            ) : (
-              <p className="text-sm text-gray-500 text-right">Loading...</p>
-            )}
+                )
+              }
+            </PDFDownloadLink>
           </div>
-          <div className="p-3 mb-10">
-            {["Opening Balances", "Main Accounts", "Closing Balances"].map(
-              (section, index) => (
-                <section key={index} className="mb-10">
-                  <h3 className="text-sm font-medium mb-2">{section}</h3>
-                  <TrialBalanceDataTable
-                    data={
-                      section === "Opening Balances"
-                        ? transformedData.openingBalances
-                        : section === "Main Accounts"
-                        ? transformedData.others
-                        : transformedData.closingBalances
-                    }
-                    columns={trialBalanceColumns}
-                  />
-                </section>
-              )
-            )}
-          </div>
-          <div className="p-3 bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 shadow-md mb-10">
+
+          {["Opening Balances", "Main Accounts", "Closing Balances"].map(
+            (section, index) => (
+              <section key={index} className="mb-8">
+                <h2 className="text-lg sm:text-xl font-bold mb-4">{section}</h2>
+                <TrialBalanceDataTable
+                  data={
+                    section === "Opening Balances"
+                      ? transformedData.openingBalances
+                      : section === "Main Accounts"
+                      ? transformedData.others
+                      : transformedData.closingBalances
+                  }
+                  columns={trialBalanceColumns}
+                />
+              </section>
+            )
+          )}
+          <div className="p-3 bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 shadow-md">
             <h3 className="text-sm font-medium mb-2 text-blue-700">Totals</h3>
             <TrialBalanceDataTable
               data={[
