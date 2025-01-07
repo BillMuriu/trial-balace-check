@@ -49,7 +49,7 @@ export function LedgerDataTable({
   });
 
   return (
-    <div className="overflow-hidden border rounded-md">
+    <div className="overflow-hidden border rounded-md max-w-screen-sm mx-auto">
       <ScrollArea className="w-full">
         <Table className="min-w-full table-auto whitespace-nowrap text-sm">
           <TableHeader>
