@@ -61,7 +61,7 @@ export function ReceiptsDataTable({ columns, data, onSelectionChange }) {
                         key={header.id}
                         className={`${
                           isLeftAligned ? "text-left" : "text-center"
-                        } px-2`}
+                        } px-2 border-r`}
                       >
                         {header.isPlaceholder
                           ? null
@@ -90,7 +90,7 @@ export function ReceiptsDataTable({ columns, data, onSelectionChange }) {
                           key={cell.id}
                           className={`${
                             isLeftAligned ? "text-left" : "text-center"
-                          } px-2`}
+                          } px-2 border-r`}
                         >
                           {flexRender(
                             cell.column.columnDef.cell,
@@ -129,7 +129,7 @@ export function ReceiptsDataTable({ columns, data, onSelectionChange }) {
                         key={header.id}
                         className={`${
                           isLeftAligned ? "text-left" : "text-center"
-                        } px-2`}
+                        } px-2 border-r`}
                       >
                         {header.isPlaceholder
                           ? null
@@ -158,7 +158,7 @@ export function ReceiptsDataTable({ columns, data, onSelectionChange }) {
                           key={cell.id}
                           className={`${
                             isLeftAligned ? "text-left" : "text-center"
-                          } px-2`}
+                          } px-2 border-r`}
                         >
                           {flexRender(
                             cell.column.columnDef.cell,
