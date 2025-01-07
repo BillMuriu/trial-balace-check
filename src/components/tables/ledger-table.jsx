@@ -17,7 +17,12 @@ import {
 } from "@/components/ui/table";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
-export function LedgerDataTable({ columns, data, onSelectionChange }) {
+export function LedgerDataTable({
+  columns,
+  data,
+  columnWidths,
+  onSelectionChange,
+}) {
   const [sorting, setSorting] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
@@ -44,19 +49,20 @@ export function LedgerDataTable({ columns, data, onSelectionChange }) {
   });
 
   return (
-    <div className="overflow-hidden rounded-md border">
-      {/* Scrollable table container */}
+    <div className="overflow-hidden border rounded-md">
       <ScrollArea className="w-full">
         <Table className="min-w-full table-auto whitespace-nowrap text-sm">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
+                {headerGroup.headers.map((header, index) => {
+                  const width = columnWidths?.[index] || "auto";
                   const isLeftAligned =
                     header.column.columnDef.header === "Description";
                   return (
                     <TableHead
                       key={header.id}
+                      style={{ width }}
                       className={isLeftAligned ? "text-left" : "text-center"}
                     >
                       {header.isPlaceholder
@@ -78,12 +84,14 @@ export function LedgerDataTable({ columns, data, onSelectionChange }) {
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  {row.getVisibleCells().map((cell) => {
+                  {row.getVisibleCells().map((cell, index) => {
+                    const width = columnWidths?.[index] || "auto";
                     const isLeftAligned =
                       cell.column.columnDef.header === "Description";
                     return (
                       <TableCell
                         key={cell.id}
+                        style={{ width }}
                         className={isLeftAligned ? "text-left" : "text-center"}
                       >
                         {flexRender(
