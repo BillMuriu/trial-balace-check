@@ -7,41 +7,53 @@ export const receiptsColumns = [
   {
     accessorKey: "from_whom",
     header: ({ column }) => <div className="text-left">From Whom</div>,
-    cell: ({ row }) => {
-      const rawValue = row.original.from_whom;
+    cell: ({ getValue }) => {
+      const rawValue = getValue();
+      const formattedValue = rawValue
+        .replace(/_/g, " ") // Replace underscores with spaces
+        .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize each word
 
-      // Function to format the value (e.g., "pettycash" → "Petty Cash")
-      const formatValue = (str) =>
-        str
-          .replace(/([a-z])([A-Z])/g, "$1 $2") // Add space between camelCase
-          .replace(/_/g, " ") // Replace underscores with spaces
-          .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize each word
+      // Check for Inter Account Borrowing
+      const iabValues = ["rmi", "school_fund", "tuition", "pettycash"];
+      const isIAB = iabValues.includes(rawValue);
 
-      const formattedValue = formatValue(rawValue);
+      // Check for Petty Cash
+      const isPettyCash = rawValue === "Petty Cash";
 
-      // Define badge colors based on value
-      const badgeColors = {
-        pettycash: "border-purple-500 bg-purple-100 text-purple-500",
-        paymentvoucher: "border-blue-500 bg-blue-100 text-blue-500",
-        cheque: "border-green-500 bg-green-100 text-green-500",
-        bankcharge: "border-orange-500 bg-orange-100 text-orange-500",
-        rmi: "border-yellow-500 bg-yellow-100 text-yellow-500",
-        schoolfund: "border-teal-500 bg-teal-100 text-teal-500",
-        tuition: "border-pink-500 bg-pink-100 text-pink-500",
-      };
-
-      const badgeClass =
-        badgeColors[rawValue.toLowerCase()] ||
-        "border-gray-500 bg-gray-100 text-gray-500"; // Default color
+      // Check for Balance Carried Forward
+      const isBalanceCarriedForward = rawValue === "Balance Carried Forward";
 
       return (
-        <div className="flex items-center space-x-2">
-          <Badge
-            variant="outline"
-            className={`flex items-center justify-center ${badgeClass}`}
-          >
-            {formattedValue}
-          </Badge>
+        <div className="flex items-center space-x-2 whitespace-nowrap overflow-x-auto">
+          {isIAB && (
+            <Badge
+              variant="outline"
+              className="border-blue-500 bg-blue-100 text-blue-500 flex items-center justify-center"
+            >
+              IAB- {formattedValue} {/* Add "IAB-" prefix to the value */}
+            </Badge>
+          )}
+          {isPettyCash && !isIAB && (
+            <Badge
+              variant="outline"
+              className="border-purple-500 bg-purple-100 text-purple-500 flex items-center justify-center"
+            >
+              {formattedValue} {/* For pettycash, just show the value */}
+            </Badge>
+          )}
+          {isBalanceCarriedForward && (
+            <Badge
+              variant="outline"
+              className="border-gray-500 bg-gray-100 text-gray-500 flex items-center justify-center"
+            >
+              {formattedValue}{" "}
+              {/* Wrap the value in the badge for Balance Carried Forward */}
+            </Badge>
+          )}
+          {/* Default badge for other values (if applicable) */}
+          {!isIAB && !isPettyCash && !isBalanceCarriedForward && (
+            <span className="text-sm">{formattedValue}</span>
+          )}
         </div>
       );
     },
@@ -74,6 +86,7 @@ export const receiptsColumns = [
       );
     },
   },
+
   {
     accessorKey: "other_voteheads",
     header: "Other Voteheads",
