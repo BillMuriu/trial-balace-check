@@ -49,10 +49,12 @@ export function LedgerDataTable({
   });
 
   return (
-    <div className="overflow-hidden border rounded-md max-w-screen-sm mx-auto">
-      <ScrollArea className="w-full">
-        <Table className="min-w-full table-auto whitespace-nowrap text-sm">
-          <TableHeader>
+    <div className="overflow-hidden border rounded-md outline outline-red-500 max-w-[250px]">
+      {" "}
+      {/* Debugging container */}
+      <ScrollArea className="w-full outline outline-blue-500">
+        <Table className="min-w-full table-auto whitespace-nowrap text-sm border border-green-500 overflow-auto">
+          <TableHeader className="outline outline-purple-500">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header, index) => {
@@ -62,8 +64,10 @@ export function LedgerDataTable({
                   return (
                     <TableHead
                       key={header.id}
+                      className={`${
+                        isLeftAligned ? "text-left" : "text-center"
+                      } border border-yellow-500 truncate`}
                       style={{ width }}
-                      className={isLeftAligned ? "text-left" : "text-center"}
                     >
                       {header.isPlaceholder
                         ? null
@@ -77,7 +81,7 @@ export function LedgerDataTable({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className="outline outline-orange-500">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
@@ -85,14 +89,14 @@ export function LedgerDataTable({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell, index) => {
-                    const width = columnWidths?.[index] || "auto";
                     const isLeftAligned =
                       cell.column.columnDef.header === "Description";
                     return (
                       <TableCell
                         key={cell.id}
-                        style={{ width }}
-                        className={isLeftAligned ? "text-left" : "text-center"}
+                        className={`${
+                          isLeftAligned ? "text-left" : "text-center"
+                        } border border-gray-500 truncate`}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
