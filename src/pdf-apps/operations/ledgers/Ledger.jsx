@@ -221,7 +221,7 @@ const Ledger = () => {
             <h1 className="text-2xl sm:text-3xl font-bold text-center">
               Ledger Summaries
             </h1>
-            <div className="absolute top-0 right-0">
+            {/* <div className="absolute top-0 right-0">
               <PDFDownloadLink
                 document={
                   <LedgerPDF
@@ -249,7 +249,7 @@ const Ledger = () => {
                   )
                 }
               </PDFDownloadLink>
-            </div>
+            </div> */}
           </div>
 
           {Object.keys(ledgerData).map((ledgerKey) => (
