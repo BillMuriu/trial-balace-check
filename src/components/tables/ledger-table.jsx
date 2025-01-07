@@ -49,7 +49,7 @@ export function LedgerDataTable({
   });
 
   return (
-    <div className="overflow-hidden border rounded-md outline outline-red-500 max-w-[500px]">
+    <div className="overflow-hidden border rounded-md outline outline-red-500 max-w-[400px]">
       {" "}
       {/* Debugging container */}
       <ScrollArea className="w-full outline outline-blue-500">
