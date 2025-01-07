@@ -158,9 +158,11 @@ import { ledger } from "@/dummy";
 const Ledger = () => {
   const [loading, setLoading] = useState(false);
   const [ledgerData, setLedgerData] = useState({});
+  const [formData, setFormData] = useState({ month: "", year: "" });
 
   const onSubmit = async (values) => {
     setLoading(true);
+    setFormData(values);
     try {
       // Use the imported dummy ledger data instead of fetching it
       const ledgers = Object.entries(ledger.combined_ledger).reduce(
@@ -211,65 +213,55 @@ const Ledger = () => {
   };
 
   return (
-    <div className="w-full px-0 max-w-sm md:max-w-md lg:max-w-lg mx-auto">
-      <LedgerForm onSubmit={onSubmit} loading={loading} />
+    <div className="flex items-center justify-center flex-col h-full w-screen p-4 sm:p-6 md:p-8">
+      {/* Ledger Form */}
+      <LedgerForm
+        onSubmit={onSubmit}
+        loading={loading}
+        defaultValues={{ month: "", year: "" }}
+      />
 
-      {Object.keys(ledgerData).length > 0 && (
-        <div className="w-full bg-white shadow-md rounded-md mt-6 relative">
-          {/* Header */}
-          <div className="relative mb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold text-center">
-              Ledger Summaries
+      {loading && <p>Loading ledger data...</p>}
+
+      {!loading && formData && Object.keys(ledgerData).length > 0 && (
+        <div className="relative mt-6 w-full max-w-4xl border border-gray-200 rounded-lg shadow-lg p-6 bg-white">
+          {/* Title */}
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-xl sm:text-2xl font-bold">
+              {ledgerTitles[formData.month]}
             </h1>
-            {/* <div className="absolute top-0 right-0">
-              <PDFDownloadLink
-                document={
-                  <LedgerPDF
-                    month={"01"} // Example month
-                    year={"2025"} // Example year
-                    ledgerData={ledgerData}
+            <PDFDownloadLink
+              document={
+                <LedgerPDF
+                  month={formData.month}
+                  year={formData.year}
+                  ledgerData={ledgerData}
+                />
+              }
+              fileName={`ledger_${formData.month}_${formData.year}.pdf`}
+            >
+              {({ loading }) =>
+                loading ? (
+                  <span className="text-sm text-gray-500">Preparing...</span>
+                ) : (
+                  <Download
+                    size={24} // Adjust the size of the icon
+                    className="cursor-pointer text-blue-500 hover:text-blue-700" // Styling the icon
                   />
-                }
-                fileName={`combined_ledger_${format(
-                  new Date(),
-                  "MM_dd_yyyy"
-                )}.pdf`}
-              >
-                {({ loading }) =>
-                  loading ? (
-                    <span className="text-gray-500">Preparing document...</span>
-                  ) : (
-                    <a
-                      href="#"
-                      className="flex items-center gap-2 text-blue-500 hover:text-blue-600 transition-all"
-                    >
-                      <Download className="w-5 h-5" />
-                      Download
-                    </a>
-                  )
-                }
-              </PDFDownloadLink>
-            </div> */}
+                )
+              }
+            </PDFDownloadLink>
           </div>
 
-          {Object.keys(ledgerData).map((ledgerKey) => (
-            <div key={ledgerKey} className="mb-8">
-              <h2 className="text-lg sm:text-xl font-bold mb-4 border-b pb-2">
-                {ledgerTitles[ledgerKey]}
+          {/* Ledger Data Table */}
+          {Object.keys(ledgerData).map((key) => (
+            <div key={key}>
+              <h2 className="text-lg sm:text-xl font-bold mb-4">
+                {ledgerTitles[key]}
               </h2>
               <LedgerDataTable
-                columns={rmiLedgerColumns}
-                data={ledgerData[ledgerKey].map((row) => ({
-                  ...row,
-                  className:
-                    row.cashbook === "Totals" ? "totals-row bg-gray-100" : "",
-                }))}
-                onSelectionChange={(newSelection) =>
-                  console.log(
-                    `${ledgerTitles[ledgerKey]} selection`,
-                    newSelection
-                  )
-                }
+                columns={rmiLedgerColumns} // Assuming columns are similar to Cashbook
+                data={ledgerData[key]}
               />
             </div>
           ))}

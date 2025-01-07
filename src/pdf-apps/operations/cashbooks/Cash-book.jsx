@@ -113,12 +113,12 @@
 
 import React, { useState, useEffect } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { Download } from "lucide-react"; // Import the Download icon from lucide-react
 import CashBookFormComponent from "./components/cash-book-form";
 import CashbookPDF from "./components/CashbookPDF";
 import { ReceiptsDataTable } from "@/components/tables/receipts-table";
 import { receiptsColumns } from "./components/cashbook-columns/receipt-columns";
 import { paymentsColumns } from "./components/cashbook-columns/payment-columns";
-import { Button } from "@/components/ui/button";
 import { cashbookDataDummy } from "@/dummy"; // Import the dummy data
 
 const fetchCashbooks = async (year, month) => {
@@ -155,7 +155,7 @@ const CashBook = () => {
   };
 
   return (
-    <div className="flex items-center justify-center flex-col h-full w-screen">
+    <div className="flex items-center justify-center flex-col h-full w-screen p-4 sm:p-6 md:p-8">
       <CashBookFormComponent
         onSubmit={onSubmit}
         defaultValues={{
@@ -173,29 +173,36 @@ const CashBook = () => {
           <div className="relative mt-6 w-full max-w-4xl border border-gray-200 rounded-lg shadow-lg p-6 bg-white">
             {/* Title */}
             <div className="flex justify-between items-center mb-6">
-              <h1 className="text-xl font-bold">Cashbook Details</h1>
-              <Button>
-                <PDFDownloadLink
-                  document={
-                    <CashbookPDF
-                      month={formData.month}
-                      year={formData.year}
-                      cashbookData={cashbookData}
+              <h1 className="text-xl sm:text-2xl font-bold">
+                Cashbook Details
+              </h1>
+              <PDFDownloadLink
+                document={
+                  <CashbookPDF
+                    month={formData.month}
+                    year={formData.year}
+                    cashbookData={cashbookData}
+                  />
+                }
+                fileName={`cashbook_${formData.month}_${formData.year}.pdf`}
+              >
+                {({ loading }) =>
+                  loading ? (
+                    <span className="text-sm text-gray-500">Preparing...</span>
+                  ) : (
+                    <Download
+                      size={24} // Adjust the size of the icon
+                      className="cursor-pointer text-blue-500 hover:text-blue-700" // Styling the icon
                     />
-                  }
-                  fileName={`cashbook_${formData.month}_${formData.year}.pdf`}
-                >
-                  {({ loading }) =>
-                    loading ? "Preparing document..." : "Download Cashbook PDF"
-                  }
-                </PDFDownloadLink>
-              </Button>
+                  )
+                }
+              </PDFDownloadLink>
             </div>
 
             {/* Receipts and Payments */}
             {cashbookData.receipts.length > 0 && (
               <div className="mb-8">
-                <h2 className="text-lg font-bold mb-4">Receipts</h2>
+                <h2 className="text-lg sm:text-xl font-bold mb-4">Receipts</h2>
                 <ReceiptsDataTable
                   columns={receiptsColumns}
                   data={cashbookData.receipts}
@@ -205,7 +212,7 @@ const CashBook = () => {
 
             {cashbookData.payments.length > 0 && (
               <div>
-                <h2 className="text-lg font-bold mb-4">Payments</h2>
+                <h2 className="text-lg sm:text-xl font-bold mb-4">Payments</h2>
                 <ReceiptsDataTable
                   columns={paymentsColumns}
                   data={cashbookData.payments}
