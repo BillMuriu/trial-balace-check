@@ -146,7 +146,7 @@
 import React, { useState } from "react";
 import LedgerForm from "./components/LedgerForm";
 import { rmiLedgerColumns } from "./components/ledger-columns";
-import { LedgerDataTable } from "@/components/tables/ledge-table";
+import { LedgerDataTable } from "@/components/tables/ledger-table";
 import { format } from "date-fns";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Download } from "lucide-react"; // Import the Download icon
@@ -211,11 +211,11 @@ const Ledger = () => {
   };
 
   return (
-    <div className="flex items-center justify-center flex-col h-full w-full px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-0 max-w-sm md:max-w-md lg:max-w-lg mx-auto">
       <LedgerForm onSubmit={onSubmit} loading={loading} />
 
       {Object.keys(ledgerData).length > 0 && (
-        <div className="w-full max-w-6xl mt-6 p-4 sm:p-6 bg-white shadow-lg rounded-lg">
+        <div className="w-full bg-white shadow-md rounded-md mt-6 relative">
           {/* Header */}
           <div className="relative mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-center">
